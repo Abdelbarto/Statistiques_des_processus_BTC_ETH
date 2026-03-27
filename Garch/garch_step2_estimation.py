@@ -5,8 +5,8 @@ from arch import arch_model
 import warnings
 warnings.filterwarnings("ignore")
 
-DATA = "/users/eleves-b/2023/abdelbar.ghassoub/Downloads/evt/returns_btc_eth.csv"
-FIGS = "/users/eleves-b/2023/abdelbar.ghassoub/Downloads/Garch/figures/"
+DATA = "/users/eleves-b/2023/abdelbar.ghassoub/Downloads/Statistiques_des_processus_BTC_ETH/evt/returns_btc_eth.csv"
+FIGS = "/users/eleves-b/2023/abdelbar.ghassoub/Downloads/Statistiques_des_processus_BTC_ETH/Garch/figures/"
 
 df = pd.read_csv(DATA, index_col=0, parse_dates=True)
 
@@ -75,3 +75,32 @@ for row, (asset, col) in enumerate([("BTC", "btc_return"),
 plt.tight_layout()
 plt.savefig(f"{FIGS}garch_step2_estimation.png", dpi=150, bbox_inches="tight")
 print(f"Figure : {FIGS}garch_step2_estimation.png")
+
+# ============================================================
+# SAUVEGARDE garch_residuals.csv
+# ============================================================
+
+import os
+
+# Re-fit propre des deux meilleurs modèles (EGARCH)
+export = {}
+
+for asset, col in [("BTC", "btc_return"), ("ETH", "eth_return")]:
+    r   = df[col].dropna() * 100
+    res = arch_model(r, mean="AR", lags=1, vol="EGARCH",
+                     p=1, o=1, q=1, dist="studentst"
+                    ).fit(disp="off")
+
+    prefix = asset.lower()
+    export[f"{prefix}_cond_vol"]   = res.conditional_volatility / 100
+    export[f"{prefix}_std_resid"]  = res.std_resid
+    export[f"{prefix}_std_loss"]   = (-res.std_resid).clip(lower=0)
+    export[f"{prefix}_return"]     = r / 100
+
+idx = export[list(export.keys())[0]].index
+df_out = pd.DataFrame(export, index=idx)
+
+out_path = "/users/eleves-b/2023/abdelbar.ghassoub/Downloads/Statistiques_des_processus_BTC_ETH/Garch/garch_residuals.csv"
+df_out.to_csv(out_path)
+print(f"\ngarch_residuals.csv sauvegardé : {out_path}")
+print(df_out.describe().round(4))
