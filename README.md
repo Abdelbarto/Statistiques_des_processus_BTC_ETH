@@ -16,37 +16,7 @@ conditionnelle, la théorie des valeurs extrêmes (EVT) et la modélisation
 de la dépendance via les copules.
 
 ---
-```
-## Structure du projet
 
-Statistiques_des_processus_BTC_ETH/
-│
-├── Garch/
-│   ├── figures/
-│   ├── garch_step1_arch_tests.py
-│   ├── garch_step2_estimation.py
-│   └── garch_step3_flash_crash.py
-│
-├── evt/
-│   ├── figures/
-│   ├── evt_step1_data.py
-│   ├── evt_step2_diagnostics.py
-│   ├── evt_step3_threshold.py
-│   ├── evt_step4_gev.py
-│   ├── evt_step5_gpd_fit.py
-│   ├── evt_step6_risk_measures.py
-│   └── evt_step7_gbevt.py
-│
-├── copulas/
-│   └── figures/
-│
-├── data/
-│   ├── returns_btc_eth.csv
-│   └── garch_residuals.csv
-│
-├── .gitignore
-└── README.md
-```
 
 
 
@@ -56,7 +26,6 @@ Statistiques_des_processus_BTC_ETH/
 git clone https://github.com/Abdelbarto/Statistiques_des_processus_BTC_ETH.git
 cd Statistiques_des_processus_BTC_ETH
 
-pip install arch scipy statsmodels matplotlib pandas numpy scikit-learn
 ```
 
 **Python** : 3.10+
@@ -77,14 +46,7 @@ pip install arch scipy statsmodels matplotlib pandas numpy scikit-learn
 
 
 ## Auteurs
-
-| Nom | Partie |
-|-----|--------|
-| Taha Meziane | *à compléter* |
-| Abdelbar Ghassoub |  EVT |
-| Kaoutar Bouaachra | *à compléter* | 
-
-
+Kaoutar BOUAACHRA, Taha Meziane, Abdelbar Ghassoub 
 ***
 
 
